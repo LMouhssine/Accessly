@@ -1,0 +1,7 @@
+prefix               = "accessly"
+location             = "westeurope"
+sql_admin_login      = "accessly_admin"
+storage_account_name = "accesslydemostorage"
+
+# The SQL administrator password must NOT be committed. Provide it at plan/apply time:
+#   export TF_VAR_sql_admin_password='<a strong password>'
