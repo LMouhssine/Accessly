@@ -2,6 +2,10 @@
 
 **Real-time event access and ticketing platform built with .NET, C#, Angular, SignalR, SQL Server and Azure-ready infrastructure.**
 
+[![CI](https://github.com/LMouhssine/Accessly/actions/workflows/ci.yml/badge.svg)](https://github.com/LMouhssine/Accessly/actions/workflows/ci.yml)
+[![Security](https://github.com/LMouhssine/Accessly/actions/workflows/security.yml/badge.svg)](https://github.com/LMouhssine/Accessly/actions/workflows/security.yml)
+[![License](https://img.shields.io/badge/license-restricted-blue.svg)](LICENSE)
+
 Accessly helps organizers create events, manage bookings, generate QR code tickets, track live check-ins and automate event access operations from a modern web dashboard.
 
 > Status: active development. The platform is built incrementally; see the [Roadmap](#roadmap) and [CHANGELOG](CHANGELOG.md).

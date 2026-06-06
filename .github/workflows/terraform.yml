@@ -1,0 +1,29 @@
+name: Terraform
+
+on:
+  pull_request:
+    paths: ['infra/terraform/**']
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: Format, validate and plan
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/terraform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - name: Format check
+        run: terraform fmt -check -recursive
+      - name: Init
+        run: terraform init -backend=false
+      - name: Validate
+        run: terraform validate
+      - name: Plan
+        run: terraform plan -input=false
+        # A real plan needs cloud credentials; this never applies automatically.
+        continue-on-error: true
