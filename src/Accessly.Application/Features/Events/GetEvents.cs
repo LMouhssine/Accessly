@@ -15,7 +15,7 @@ public sealed record GetEventsQuery(
     bool PublishedOnly = true,
     Guid? OrganizationId = null) : IQuery<PagedResult<EventSummaryDto>>;
 
-public sealed class GetEventsHandler(IAppDbContext db)
+public sealed class GetEventsHandler(IAppDbContext db, ICurrentUser user)
     : IRequestHandler<GetEventsQuery, PagedResult<EventSummaryDto>>
 {
     public async Task<PagedResult<EventSummaryDto>> Handle(GetEventsQuery request, CancellationToken cancellationToken)
@@ -23,9 +23,24 @@ public sealed class GetEventsHandler(IAppDbContext db)
         var page = Math.Max(1, request.Page);
         var pageSize = Math.Clamp(request.PageSize, 1, 100);
 
+        // Enforce visibility by role so unpublished events never leak across tenants.
+        var publishedOnly = request.PublishedOnly;
+        var organizationId = request.OrganizationId;
+        switch (user.Role)
+        {
+            case UserRole.Admin:
+                break;
+            case UserRole.Organizer or UserRole.Staff:
+                organizationId = user.OrganizationId;
+                break;
+            default:
+                publishedOnly = true;
+                break;
+        }
+
         var query = db.Events.AsNoTracking();
 
-        if (request.PublishedOnly)
+        if (publishedOnly)
         {
             query = query.Where(e => e.Status == EventStatus.Published);
         }
@@ -35,9 +50,9 @@ public sealed class GetEventsHandler(IAppDbContext db)
             query = query.Where(e => e.Status == request.Status.Value);
         }
 
-        if (request.OrganizationId.HasValue)
+        if (organizationId.HasValue)
         {
-            query = query.Where(e => e.OrganizationId == request.OrganizationId.Value);
+            query = query.Where(e => e.OrganizationId == organizationId.Value);
         }
 
         if (!string.IsNullOrWhiteSpace(request.Category))
