@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Accessly.Api/Accessly.Api.csproj" />
+    <Project Path="src/Accessly.Application/Accessly.Application.csproj" />
+    <Project Path="src/Accessly.Domain/Accessly.Domain.csproj" />
+    <Project Path="src/Accessly.Infrastructure/Accessly.Infrastructure.csproj" />
+    <Project Path="src/Accessly.Worker/Accessly.Worker.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Accessly.UnitTests/Accessly.UnitTests.csproj" />
+  </Folder>
+</Solution>
