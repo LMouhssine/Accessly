@@ -1,0 +1,83 @@
+# ---------------------------------------------------------------------------
+# Accessly .gitignore
+# ---------------------------------------------------------------------------
+
+# --- Secrets & local environment ---
+.env
+.env.*
+!.env.example
+*.local
+appsettings.*.local.json
+secrets.json
+*.pfx
+*.key
+*.pem
+
+# --- .NET / build output ---
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+*.user
+*.suo
+*.userprefs
+project.lock.json
+*.nupkg
+*.snupkg
+.vs/
+TestResults/
+coverage/
+*.coverage
+*.trx
+BenchmarkDotNet.Artifacts/
+
+# --- Node / Angular ---
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.angular/
+dist/
+.npm/
+*.tsbuildinfo
+playwright-report/
+test-results/
+blob-report/
+
+# --- Docker ---
+**/docker-data/
+.docker/
+
+# --- Terraform ---
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+.terraform.lock.hcl
+
+# --- Observability local data ---
+infra/observability/grafana-data/
+infra/observability/prometheus-data/
+
+# --- IDE / editors ---
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+*.swp
+*.swo
+
+# --- OS noise ---
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# --- Local uploads (cover images, etc.) ---
+src/Accessly.Api/wwwroot/uploads/
+storage/
