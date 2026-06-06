@@ -136,9 +136,33 @@ and adjust values; `.env` is git-ignored and must never be committed. Key groups
 
 ## Demo data
 
-A development seeder provisions a demo organization, users for each role, sample events,
-bookings, tickets, check-ins and feedback so the dashboard is populated on first run. All
-demo data is fictional.
+A development seeder provisions a demo organization, one user per role, sample events and a
+confirmed booking with a ticket, so the dashboard is populated on first run. All demo data is
+fictional.
+
+### Demo accounts
+
+All demo accounts use the password `Password123!`:
+
+| Email | Role |
+| --- | --- |
+| `admin@accessly.local` | Admin |
+| `organizer@accessly.local` | Organizer |
+| `staff@accessly.local` | Staff |
+| `attendee@accessly.local` | Attendee |
+
+### Local service URLs
+
+| Service | URL |
+| --- | --- |
+| Web dashboard | http://localhost:4200 |
+| API + Swagger | http://localhost:8080/swagger |
+| Health | http://localhost:8080/api/health |
+| Metrics | http://localhost:8080/metrics |
+| Hangfire dashboard | http://localhost:8080/hangfire |
+| RabbitMQ management | http://localhost:15672 |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3000 |
 
 ## Testing
 
