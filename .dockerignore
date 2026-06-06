@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+**/.angular/
+**/.vs/
+.git/
+.github/
+**/TestResults/
+**/*.user
+infra/observability/grafana-data/
+infra/observability/prometheus-data/
+src/Accessly.Api/wwwroot/uploads/
