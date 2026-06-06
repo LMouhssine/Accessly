@@ -25,7 +25,7 @@ public class CreateBookingHandlerTests
         await db.SaveChangesAsync();
 
         var handler = new CreateBookingHandler(
-            db, new FakeCurrentUser(attendee.Id, UserRole.Attendee, null), new FixedClock(), new FakePaymentProvider(), new NoOpAuditLogger());
+            db, new FakeCurrentUser(attendee.Id, UserRole.Attendee, null), new FixedClock(), new FakePaymentProvider(), new NoOpAuditLogger(), new NoOpEventBus());
 
         var act = () => handler.Handle(new CreateBookingCommand(@event.Id), CancellationToken.None);
 
@@ -43,7 +43,7 @@ public class CreateBookingHandlerTests
         await db.SaveChangesAsync();
 
         var handler = new CreateBookingHandler(
-            db, new FakeCurrentUser(attendee.Id, UserRole.Attendee, null), new FixedClock(), new FakePaymentProvider(), new NoOpAuditLogger());
+            db, new FakeCurrentUser(attendee.Id, UserRole.Attendee, null), new FixedClock(), new FakePaymentProvider(), new NoOpAuditLogger(), new NoOpEventBus());
 
         var result = await handler.Handle(new CreateBookingCommand(@event.Id), CancellationToken.None);
 
@@ -65,7 +65,7 @@ public class CreateBookingHandlerTests
         await db.SaveChangesAsync();
 
         var handler = new CreateBookingHandler(
-            db, new FakeCurrentUser(attendee.Id, UserRole.Attendee, null), new FixedClock(), new FakePaymentProvider(), new NoOpAuditLogger());
+            db, new FakeCurrentUser(attendee.Id, UserRole.Attendee, null), new FixedClock(), new FakePaymentProvider(), new NoOpAuditLogger(), new NoOpEventBus());
 
         var act = () => handler.Handle(new CreateBookingCommand(@event.Id), CancellationToken.None);
 

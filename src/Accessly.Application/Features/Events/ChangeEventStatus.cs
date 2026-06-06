@@ -1,4 +1,5 @@
 using Accessly.Application.Common;
+using Accessly.Application.Common.Events;
 using Accessly.Application.Common.Exceptions;
 using Accessly.Application.Common.Interfaces;
 using Accessly.Application.Common.Messaging;
@@ -52,7 +53,7 @@ public sealed class UnpublishEventHandler(IAppDbContext db, ICurrentUser user, I
     }
 }
 
-public sealed class CancelEventHandler(IAppDbContext db, ICurrentUser user, IAuditLogger audit)
+public sealed class CancelEventHandler(IAppDbContext db, ICurrentUser user, IAuditLogger audit, IEventBus eventBus)
     : IRequestHandler<CancelEventCommand, Unit>
 {
     public async Task<Unit> Handle(CancelEventCommand request, CancellationToken cancellationToken)
@@ -67,6 +68,7 @@ public sealed class CancelEventHandler(IAppDbContext db, ICurrentUser user, IAud
         @event.Status = EventStatus.Cancelled;
         await db.SaveChangesAsync(cancellationToken);
         await audit.LogAsync(AuditActions.EventCancelled, nameof(Event), @event.Id.ToString(), null, cancellationToken);
+        await eventBus.PublishAsync(new EventCancelledIntegrationEvent(@event.Id), cancellationToken);
         return Unit.Value;
     }
 }

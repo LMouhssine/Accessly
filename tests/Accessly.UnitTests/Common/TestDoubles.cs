@@ -1,4 +1,5 @@
 using Accessly.Application.Common.Interfaces;
+using Accessly.Application.Common.Messaging;
 using Accessly.Domain.Enums;
 using Accessly.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,12 @@ internal sealed class NoOpAuditLogger : IAuditLogger
 {
     public Task LogAsync(string action, string entityType, string? entityId = null, object? metadata = null, CancellationToken cancellationToken = default)
         => Task.CompletedTask;
+}
+
+internal sealed class NoOpEventBus : IEventBus
+{
+    public Task PublishAsync<TEvent>(TEvent integrationEvent, CancellationToken cancellationToken = default)
+        where TEvent : IIntegrationEvent => Task.CompletedTask;
 }
 
 internal static class TestDb

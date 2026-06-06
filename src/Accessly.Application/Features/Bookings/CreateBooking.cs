@@ -1,4 +1,5 @@
 using Accessly.Application.Common;
+using Accessly.Application.Common.Events;
 using Accessly.Application.Common.Exceptions;
 using Accessly.Application.Common.Interfaces;
 using Accessly.Application.Common.Messaging;
@@ -24,7 +25,8 @@ public sealed class CreateBookingHandler(
     ICurrentUser user,
     IClock clock,
     IPaymentProvider payments,
-    IAuditLogger audit) : IRequestHandler<CreateBookingCommand, BookingResult>
+    IAuditLogger audit,
+    IEventBus eventBus) : IRequestHandler<CreateBookingCommand, BookingResult>
 {
     public async Task<BookingResult> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
     {
@@ -92,6 +94,7 @@ public sealed class CreateBookingHandler(
         db.Bookings.Add(booking);
         await db.SaveChangesAsync(cancellationToken);
         await audit.LogAsync(AuditActions.BookingCreated, nameof(Booking), booking.Id.ToString(), new { @event.Id, AttendeeId = attendeeId }, cancellationToken);
+        await eventBus.PublishAsync(new BookingConfirmedIntegrationEvent(booking.Id, @event.Id, attendeeId), cancellationToken);
 
         return new BookingResult(booking.Id, booking.Ticket.Id, booking.Ticket.Code, booking.Status);
     }

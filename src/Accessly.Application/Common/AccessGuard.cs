@@ -32,6 +32,23 @@ public static class AccessGuard
         throw new ForbiddenAccessException();
     }
 
+    /// <summary>Admins, plus organizers and staff of the organization, may operate an event (e.g. check-in).</summary>
+    public static void EnsureCanOperateEvent(ICurrentUser user, Guid organizationId)
+    {
+        EnsureAuthenticated(user);
+        if (user.Role == UserRole.Admin)
+        {
+            return;
+        }
+
+        if (user.Role is UserRole.Organizer or UserRole.Staff && user.OrganizationId == organizationId)
+        {
+            return;
+        }
+
+        throw new ForbiddenAccessException();
+    }
+
     public static Guid ResolveOrganizationId(ICurrentUser user, Guid? requested)
     {
         EnsureAuthenticated(user);
