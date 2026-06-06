@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build, test and publish release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Build
+        run: dotnet build Accessly.slnx --configuration Release
+      - name: Test
+        run: dotnet test Accessly.slnx --configuration Release --no-build
+      - name: Publish API
+        run: dotnet publish src/Accessly.Api/Accessly.Api.csproj -c Release -o artifacts/api
+      - name: Publish Worker
+        run: dotnet publish src/Accessly.Worker/Accessly.Worker.csproj -c Release -o artifacts/worker
+      - name: Package artifacts
+        run: |
+          cd artifacts
+          zip -r accessly-api.zip api
+          zip -r accessly-worker.zip worker
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            artifacts/accessly-api.zip
+            artifacts/accessly-worker.zip

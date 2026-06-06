@@ -1,0 +1,14 @@
+title = "Accessly gitleaks configuration"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Documented local development placeholders — not real secrets."
+regexes = [
+  '''Your_strong_Passw0rd!''',
+  '''dev-only-change-me-please-use-a-long-random-string-32\+chars''',
+]
+paths = [
+  '''\.env\.example''',
+]
