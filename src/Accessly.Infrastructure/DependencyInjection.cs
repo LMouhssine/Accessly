@@ -1,6 +1,11 @@
+using Accessly.Application.Common.Events;
 using Accessly.Application.Common.Interfaces;
+using Accessly.Application.Common.Messaging;
 using Accessly.Infrastructure.Auditing;
 using Accessly.Infrastructure.Identity;
+using Accessly.Infrastructure.Jobs;
+using Accessly.Infrastructure.Messaging;
+using Accessly.Infrastructure.Notifications;
 using Accessly.Infrastructure.Payments;
 using Accessly.Infrastructure.Persistence;
 using Accessly.Infrastructure.QrCodes;
@@ -49,6 +54,23 @@ public static class DependencyInjection
         else
         {
             services.AddSingleton<IPaymentProvider, FakePaymentProvider>();
+        }
+
+        // Notifications and messaging.
+        services.AddSingleton<IEmailSender, FakeEmailSender>();
+        services.AddScoped<NotificationJobs>();
+        services.Configure<RabbitMqOptions>(configuration.GetSection(RabbitMqOptions.SectionName));
+        services.AddScoped<IIntegrationEventHandler<BookingConfirmedIntegrationEvent>, BookingConfirmedNotificationHandler>();
+        services.AddScoped<IIntegrationEventHandler<EventCancelledIntegrationEvent>, EventCancelledNotificationHandler>();
+
+        var rabbit = configuration.GetSection(RabbitMqOptions.SectionName).Get<RabbitMqOptions>() ?? new RabbitMqOptions();
+        if (rabbit.Enabled)
+        {
+            services.AddSingleton<IEventBus, RabbitMqEventBus>();
+        }
+        else
+        {
+            services.AddScoped<IEventBus, InMemoryEventBus>();
         }
 
         return services;
