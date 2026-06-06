@@ -1,6 +1,7 @@
 using Accessly.Application.Common.Events;
 using Accessly.Application.Common.Interfaces;
 using Accessly.Application.Common.Messaging;
+using Accessly.Infrastructure.Ai;
 using Accessly.Infrastructure.Auditing;
 using Accessly.Infrastructure.Identity;
 using Accessly.Infrastructure.Jobs;
@@ -14,6 +15,7 @@ using Accessly.Infrastructure.Time;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Accessly.Infrastructure;
 
@@ -71,6 +73,24 @@ public static class DependencyInjection
         else
         {
             services.AddScoped<IEventBus, InMemoryEventBus>();
+        }
+
+        // AI assistant (deterministic Fake by default; OpenAI-compatible only when fully configured).
+        services.Configure<AiOptions>(configuration.GetSection(AiOptions.SectionName));
+        var ai = configuration.GetSection(AiOptions.SectionName).Get<AiOptions>() ?? new AiOptions();
+        if (string.Equals(ai.Provider, "OpenAiCompatible", StringComparison.OrdinalIgnoreCase)
+            && !string.IsNullOrWhiteSpace(ai.BaseUrl)
+            && !string.IsNullOrWhiteSpace(ai.ApiKey))
+        {
+            services.AddHttpClient<IAiProvider, OpenAiCompatibleProvider>((sp, client) =>
+            {
+                var aiOptions = sp.GetRequiredService<IOptions<AiOptions>>().Value;
+                client.BaseAddress = new Uri(aiOptions.BaseUrl!.TrimEnd('/') + "/");
+            });
+        }
+        else
+        {
+            services.AddSingleton<IAiProvider, FakeAiProvider>();
         }
 
         return services;

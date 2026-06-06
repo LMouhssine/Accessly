@@ -21,6 +21,8 @@ public static class DependencyInjection
         RegisterRequestHandlers(services, assembly);
         services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
 
+        services.AddScoped<Features.Ai.AiEventAssistantService>();
+
         return services;
     }
 
