@@ -13,6 +13,10 @@ public sealed class NotFoundException : Exception
     }
 }
 
+/// <summary>Thrown when authentication fails or is missing.</summary>
+public sealed class UnauthorizedException(string message = "Authentication is required.")
+    : Exception(message);
+
 /// <summary>Thrown when the caller is not allowed to perform the requested action.</summary>
 public sealed class ForbiddenAccessException(string message = "Access to this resource is denied.")
     : Exception(message);
