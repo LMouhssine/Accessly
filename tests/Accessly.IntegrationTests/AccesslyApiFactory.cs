@@ -8,7 +8,7 @@ namespace Accessly.IntegrationTests;
 /// <summary>Spins up a SQL Server container and points the API at it for the test run.</summary>
 public sealed class AccesslyApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    private readonly MsSqlContainer _database = new MsSqlBuilder().Build();
+    private readonly MsSqlContainer _database = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest").Build();
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
