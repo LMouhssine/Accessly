@@ -25,7 +25,7 @@ jobs:
         run: dotnet test Accessly.slnx --configuration Release --no-build --verbosity normal
 
   frontend:
-    name: Frontend build
+    name: Frontend build & test
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -39,6 +39,8 @@ jobs:
           cache-dependency-path: src/Accessly.Web/package-lock.json
       - name: Install
         run: npm ci
+      - name: Test
+        run: npm test -- --watch=false
       - name: Build
         run: npm run build
 
