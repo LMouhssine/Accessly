@@ -9,6 +9,7 @@ import {
   Booking,
   BookingResult,
   CheckIn,
+  DashboardSummary,
   CheckInResponse,
   CheckInSummary,
   EventDetail,
@@ -40,6 +41,11 @@ export interface EventInput {
 export class ApiService {
   private readonly http = inject(HttpClient);
   private readonly base = environment.apiBaseUrl;
+
+  // --- Dashboard ---
+  getDashboardSummary(): Observable<DashboardSummary> {
+    return this.http.get<DashboardSummary>(`${this.base}/api/dashboard/summary`);
+  }
 
   // --- Events ---
   getEvents(options: {

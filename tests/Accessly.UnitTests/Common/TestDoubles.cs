@@ -31,6 +31,15 @@ internal sealed class NoOpEventBus : IEventBus
         where TEvent : IIntegrationEvent => Task.CompletedTask;
 }
 
+/// <summary>A pass-through cache that always invokes the factory, so tests exercise the source.</summary>
+internal sealed class PassThroughCache : ICacheService
+{
+    public Task<T> GetOrSetAsync<T>(string key, Func<CancellationToken, Task<T>> factory, TimeSpan ttl, CancellationToken cancellationToken = default)
+        => factory(cancellationToken);
+
+    public Task RemoveAsync(string key, CancellationToken cancellationToken = default) => Task.CompletedTask;
+}
+
 internal static class TestDb
 {
     public static AppDbContext NewInMemory() =>

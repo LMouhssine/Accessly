@@ -157,6 +157,15 @@ export interface Organization {
   createdAt: string;
 }
 
+export interface DashboardSummary {
+  totalEvents: number;
+  publishedEvents: number;
+  draftEvents: number;
+  upcomingEvents: number;
+  confirmedBookings: number;
+  upcoming: EventSummary[];
+}
+
 export interface AuditLogEntry {
   id: string;
   action: string;

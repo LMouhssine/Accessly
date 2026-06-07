@@ -3,6 +3,7 @@ using Accessly.Application.Common.Interfaces;
 using Accessly.Application.Common.Messaging;
 using Accessly.Infrastructure.Ai;
 using Accessly.Infrastructure.Auditing;
+using Accessly.Infrastructure.Caching;
 using Accessly.Infrastructure.Identity;
 using Accessly.Infrastructure.Jobs;
 using Accessly.Infrastructure.Messaging;
@@ -36,6 +37,25 @@ public static class DependencyInjection
         services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
         services.AddScoped<AppDbContextInitializer>();
         services.AddSingleton<IClock, SystemClock>();
+
+        // Distributed cache: Redis when enabled and configured, otherwise an in-process store
+        // so the app runs without an external cache.
+        services.Configure<RedisOptions>(configuration.GetSection(RedisOptions.SectionName));
+        var redis = configuration.GetSection(RedisOptions.SectionName).Get<RedisOptions>() ?? new RedisOptions();
+        if (redis.Enabled && !string.IsNullOrWhiteSpace(redis.Connection))
+        {
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = redis.Connection;
+                options.InstanceName = redis.InstanceName;
+            });
+        }
+        else
+        {
+            services.AddDistributedMemoryCache();
+        }
+
+        services.AddSingleton<ICacheService, DistributedCacheService>();
 
         // Identity and authentication.
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
