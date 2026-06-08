@@ -1,5 +1,5 @@
 # Accessly Web (Angular) — build then serve with nginx
-FROM node:22 AS build
+FROM node:26 AS build
 WORKDIR /app
 COPY src/Accessly.Web/package*.json ./
 RUN npm ci
