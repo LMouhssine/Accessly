@@ -83,7 +83,7 @@ A layered view and detailed diagrams live in [docs/architecture](docs/architectu
 
 ## Repository layout
 
-```
+```text
 src/
   Accessly.Domain/          Entities, enums, domain rules (no external dependencies)
   Accessly.Application/      Use cases (CQRS), DTOs, validation, abstractions
@@ -117,8 +117,8 @@ make setup
 make docker-up
 ```
 
-Once the API reports healthy at http://localhost:8080/api/health, open the dashboard at
-http://localhost:4200 and sign in with a [demo account](#demo-accounts). A full guided
+Once the API reports healthy at <http://localhost:8080/api/health>, open the dashboard at
+<http://localhost:4200> and sign in with a [demo account](#demo-accounts). A full guided
 walkthrough is in [docs/product/demo-script.md](docs/product/demo-script.md).
 
 > **Apple Silicon (arm64) note.** The official SQL Server image is `linux/amd64` and runs
@@ -176,14 +176,14 @@ All demo accounts use the password `Password123!`:
 
 | Service | URL |
 | --- | --- |
-| Web dashboard | http://localhost:4200 |
-| API + Swagger | http://localhost:8080/swagger |
-| Health | http://localhost:8080/api/health |
-| Metrics | http://localhost:8080/metrics |
-| Hangfire dashboard | http://localhost:8080/hangfire |
-| RabbitMQ management | http://localhost:15672 |
-| Prometheus | http://localhost:9090 |
-| Grafana | http://localhost:3000 |
+| Web dashboard | <http://localhost:4200> |
+| API + Swagger | <http://localhost:8080/swagger> |
+| Health | <http://localhost:8080/api/health> |
+| Metrics | <http://localhost:8080/metrics> |
+| Hangfire dashboard | <http://localhost:8080/hangfire> |
+| RabbitMQ management | <http://localhost:15672> |
+| Prometheus | <http://localhost:9090> |
+| Grafana | <http://localhost:3000> |
 
 ## Testing
 

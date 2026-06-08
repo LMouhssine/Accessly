@@ -26,14 +26,14 @@ curl -s http://localhost:8080/api/health
 
 | Service | URL |
 | --- | --- |
-| Web dashboard | http://localhost:4200 |
-| API + Swagger | http://localhost:8080/swagger |
-| Health | http://localhost:8080/api/health |
-| Metrics | http://localhost:8080/metrics |
-| Hangfire dashboard | http://localhost:8080/hangfire |
-| RabbitMQ management | http://localhost:15672 |
-| Prometheus | http://localhost:9090 |
-| Grafana | http://localhost:3000 |
+| Web dashboard | <http://localhost:4200> |
+| API + Swagger | <http://localhost:8080/swagger> |
+| Health | <http://localhost:8080/api/health> |
+| Metrics | <http://localhost:8080/metrics> |
+| Hangfire dashboard | <http://localhost:8080/hangfire> |
+| RabbitMQ management | <http://localhost:15672> |
+| Prometheus | <http://localhost:9090> |
+| Grafana | <http://localhost:3000> |
 
 ## Demo accounts
 
@@ -50,7 +50,7 @@ All demo accounts use the password `Password123!`:
 
 ### 1. Browse and book as an attendee
 
-1. Open http://localhost:4200 and visit **Events** to browse the published catalog.
+1. Open <http://localhost:4200> and visit **Events** to browse the published catalog.
 2. Open an event to see its detail page (venue, schedule, speakers, capacity).
 3. Sign in as `attendee@accessly.local`, then book the event. A confirmed booking issues a
    ticket with a QR code, visible under **My tickets**.

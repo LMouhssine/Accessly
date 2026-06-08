@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] - 2026-06-07
 
 ### Added
+
 - Audit-log read API: `GET /api/audit-logs` with simple filtering (action, entity type,
   actor, date range), newest-first ordering, pagination and RBAC scoping (organizers see
   their own organization, admins see all).
@@ -23,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Frontend unit tests now run in CI.
 
 ### Fixed
+
 - Committed `LocalFileStorage` source that an over-broad `storage/` gitignore rule hid on
   case-insensitive filesystems, which had broken the backend build and container images on CI.
 - Pointed the Makefile at the real `Accessly.slnx` solution (was `Accessly.sln`).
@@ -32,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2026-06-06
 
 ### Added
+
 - Repository scaffold, documentation, ADRs, threat model and community health files.
 - .NET 10 backend with Clean Architecture and an in-house CQRS dispatcher.
 - Organizations, JWT auth with role-based authorization, events (CRUD, publish/cancel,
