@@ -12,6 +12,16 @@ Accessly helps organizers create events, manage bookings, generate QR code ticke
 
 ---
 
+## Screenshots
+
+| Public catalog | Organizer overview |
+| --- | --- |
+| ![Event catalog](docs/assets/catalog.png) | ![Dashboard overview](docs/assets/dashboard-overview.png) |
+
+| Landing page | Audit logs |
+| --- | --- |
+| ![Landing page](docs/assets/landing.png) | ![Audit logs](docs/assets/dashboard-audit-logs.png) |
+
 ## Features
 
 - **Organizations & multi-tenancy** — data is scoped per organization.
@@ -22,7 +32,10 @@ Accessly helps organizers create events, manage bookings, generate QR code ticke
 - **Notifications** — confirmation, reminder, change and post-event messages via background jobs (emails are simulated by default).
 - **Event assistant** — a provider abstraction with a deterministic offline default that drafts descriptions, tags, reminder emails and agendas.
 - **Attendee feedback** — ratings, comments and per-event summaries.
-- **Audit logging** — key actions are recorded with actor, entity and metadata.
+- **Audit logging** — key actions are recorded with actor, entity and metadata, and surfaced
+  on a filterable, paginated audit-log page for organizers and admins.
+- **Caching** — a short-lived distributed cache (Redis when configured, in-process otherwise)
+  backs the dashboard summary; cache faults fail open so an outage never breaks a request.
 - **Observability & security** — structured logs, correlation IDs, health checks, metrics, JWT auth, RBAC, rate limiting and validated inputs.
 
 ## Tech stack
@@ -70,7 +83,7 @@ A layered view and detailed diagrams live in [docs/architecture](docs/architectu
 
 ## Repository layout
 
-```
+```text
 src/
   Accessly.Domain/          Entities, enums, domain rules (no external dependencies)
   Accessly.Application/      Use cases (CQRS), DTOs, validation, abstractions
@@ -104,8 +117,16 @@ make setup
 make docker-up
 ```
 
-The Docker stack and the full set of make targets are introduced as the project is built
-out; see the [Roadmap](#roadmap) for the current state.
+Once the API reports healthy at <http://localhost:8080/api/health>, open the dashboard at
+<http://localhost:4200> and sign in with a [demo account](#demo-accounts). A full guided
+walkthrough is in [docs/product/demo-script.md](docs/product/demo-script.md).
+
+> **Apple Silicon (arm64) note.** The official SQL Server image is `linux/amd64` and runs
+> under emulation on Apple Silicon, so the `sqlserver` container takes noticeably longer to
+> become healthy on first start. This is expected and is not a failure — allow a minute or
+> two. If you prefer an arm64-native database for local development, point
+> `ConnectionStrings__Default` at an [Azure SQL Edge](https://mcr.microsoft.com/product/azure-sql-edge/about)
+> container; the schema and migrations are identical.
 
 ## Environment variables
 
@@ -155,14 +176,14 @@ All demo accounts use the password `Password123!`:
 
 | Service | URL |
 | --- | --- |
-| Web dashboard | http://localhost:4200 |
-| API + Swagger | http://localhost:8080/swagger |
-| Health | http://localhost:8080/api/health |
-| Metrics | http://localhost:8080/metrics |
-| Hangfire dashboard | http://localhost:8080/hangfire |
-| RabbitMQ management | http://localhost:15672 |
-| Prometheus | http://localhost:9090 |
-| Grafana | http://localhost:3000 |
+| Web dashboard | <http://localhost:4200> |
+| API + Swagger | <http://localhost:8080/swagger> |
+| Health | <http://localhost:8080/api/health> |
+| Metrics | <http://localhost:8080/metrics> |
+| Hangfire dashboard | <http://localhost:8080/hangfire> |
+| RabbitMQ management | <http://localhost:15672> |
+| Prometheus | <http://localhost:9090> |
+| Grafana | <http://localhost:3000> |
 
 ## Testing
 

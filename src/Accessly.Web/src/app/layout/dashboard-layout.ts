@@ -24,7 +24,15 @@ import { AuthService } from '../core/auth.service';
           <a mat-list-item routerLink="/dashboard/events" routerLinkActive="active">Events</a>
           <a mat-list-item routerLink="/dashboard/check-in" routerLinkActive="active">Live check-in</a>
           <a mat-list-item routerLink="/dashboard/bookings" routerLinkActive="active">Bookings</a>
+          @if (auth.hasRole('Admin', 'Organizer')) {
+            <a mat-list-item routerLink="/dashboard/attendees" routerLinkActive="active">Attendees</a>
+            <a mat-list-item routerLink="/dashboard/feedbacks" routerLinkActive="active">Feedback</a>
+          }
           <a mat-list-item routerLink="/dashboard/notifications" routerLinkActive="active">Notifications</a>
+          @if (auth.hasRole('Admin', 'Organizer')) {
+            <a mat-list-item routerLink="/dashboard/audit-logs" routerLinkActive="active">Audit logs</a>
+          }
+          <a mat-list-item routerLink="/dashboard/settings" routerLinkActive="active">Settings</a>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content class="main"><router-outlet /></mat-sidenav-content>

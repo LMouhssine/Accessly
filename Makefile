@@ -6,7 +6,7 @@
 SHELL := /bin/bash
 export DOTNET_ROOT ?= /opt/homebrew/opt/dotnet/libexec
 
-SOLUTION       := Accessly.sln
+SOLUTION       := Accessly.slnx
 API_PROJECT    := src/Accessly.Api/Accessly.Api.csproj
 INFRA_PROJECT  := src/Accessly.Infrastructure/Accessly.Infrastructure.csproj
 WEB_DIR        := src/Accessly.Web

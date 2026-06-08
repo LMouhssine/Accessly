@@ -40,7 +40,7 @@ make logs
 
 We use [Conventional Commits](https://www.conventionalcommits.org/):
 
-```
+```text
 <type>(<scope>): <summary>
 ```
 
@@ -48,7 +48,7 @@ Allowed types: `feat`, `fix`, `test`, `docs`, `ci`, `chore`, `refactor`, `securi
 
 Examples:
 
-```
+```text
 feat(events): add event publishing workflow
 fix(bookings): prevent booking when an event is full
 test(api): add integration tests with testcontainers

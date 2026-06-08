@@ -12,6 +12,5 @@ public static class AuditActions
     public const string BookingCreated = "booking.created";
     public const string BookingCancelled = "booking.cancelled";
     public const string CheckInRecorded = "checkin.recorded";
-    public const string RoleChanged = "role.changed";
     public const string AiGenerated = "ai.generated";
 }

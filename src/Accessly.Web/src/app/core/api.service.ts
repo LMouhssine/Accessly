@@ -5,9 +5,11 @@ import { environment } from '../../environments/environment';
 import {
   AiTagsResponse,
   AiTextResponse,
+  AuditLogEntry,
   Booking,
   BookingResult,
   CheckIn,
+  DashboardSummary,
   CheckInResponse,
   CheckInSummary,
   EventDetail,
@@ -39,6 +41,11 @@ export interface EventInput {
 export class ApiService {
   private readonly http = inject(HttpClient);
   private readonly base = environment.apiBaseUrl;
+
+  // --- Dashboard ---
+  getDashboardSummary(): Observable<DashboardSummary> {
+    return this.http.get<DashboardSummary>(`${this.base}/api/dashboard/summary`);
+  }
 
   // --- Events ---
   getEvents(options: {
@@ -158,5 +165,22 @@ export class ApiService {
   // --- Organizations ---
   getOrganizations(): Observable<Organization[]> {
     return this.http.get<Organization[]>(`${this.base}/api/organizations`);
+  }
+
+  // --- Audit logs ---
+  getAuditLogs(options: {
+    page?: number;
+    pageSize?: number;
+    action?: string;
+    entityType?: string;
+    actorId?: string;
+  } = {}): Observable<PagedResult<AuditLogEntry>> {
+    let params = new HttpParams();
+    for (const [key, value] of Object.entries(options)) {
+      if (value !== undefined && value !== null && value !== '') {
+        params = params.set(key, String(value));
+      }
+    }
+    return this.http.get<PagedResult<AuditLogEntry>>(`${this.base}/api/audit-logs`, { params });
   }
 }

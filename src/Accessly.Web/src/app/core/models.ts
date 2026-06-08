@@ -156,3 +156,24 @@ export interface Organization {
   slug: string;
   createdAt: string;
 }
+
+export interface DashboardSummary {
+  totalEvents: number;
+  publishedEvents: number;
+  draftEvents: number;
+  upcomingEvents: number;
+  confirmedBookings: number;
+  upcoming: EventSummary[];
+}
+
+export interface AuditLogEntry {
+  id: string;
+  action: string;
+  actorId?: string | null;
+  actorDisplayName?: string | null;
+  organizationId?: string | null;
+  entityType: string;
+  entityId?: string | null;
+  timestamp: string;
+  metadataJson?: string | null;
+}

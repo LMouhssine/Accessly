@@ -80,4 +80,6 @@ desktop.ini
 
 # --- Local uploads (cover images, etc.) ---
 src/Accessly.Api/wwwroot/uploads/
-storage/
+# Anchored to the repo root so it never matches source folders named "Storage"
+# on case-insensitive filesystems (e.g. src/Accessly.Infrastructure/Storage/).
+/storage/
