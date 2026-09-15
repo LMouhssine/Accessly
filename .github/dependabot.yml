@@ -11,6 +11,8 @@ updates:
       - dependency-name: "FluentAssertions"
         update-types: ["version-update:semver-major"]
     groups:
+      hangfire:
+        patterns: ["Hangfire.*"]
       dotnet-all:
         patterns: ["*"]
 
