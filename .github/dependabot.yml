@@ -3,26 +3,41 @@ updates:
   - package-ecosystem: nuget
     directory: "/"
     schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
+      interval: monthly
+    open-pull-requests-limit: 3
     ignore:
       # FluentAssertions 8+ ships under a commercial license; the project pins to the
       # last free 7.x line on purpose (see docs/adr). Skip major-version bumps.
       - dependency-name: "FluentAssertions"
         update-types: ["version-update:semver-major"]
+    groups:
+      dotnet-all:
+        patterns: ["*"]
 
   - package-ecosystem: npm
     directory: "/src/Accessly.Web"
     schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
+      interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      angular:
+        patterns: ["@angular/*", "@angular-devkit/*", "zone.js"]
+      vitest:
+        patterns: ["vitest", "@vitest/*"]
+      npm-all:
+        patterns: ["*"]
 
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: weekly
+      interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      actions-all:
+        patterns: ["*"]
 
   - package-ecosystem: docker
     directory: "/infra/docker"
     schedule:
-      interval: weekly
+      interval: monthly
+    open-pull-requests-limit: 3
